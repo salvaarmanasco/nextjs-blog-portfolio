@@ -160,7 +160,7 @@ export default function Home() {
                 </li>
                 <li>
                   <a
-                    href="../public/images/CV-2023-SalvadorArmanasco.pdf"
+                    href="../public/CV-2023-SalvadorArmanasco.pdf"
                     download
                     className=" bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-4 py-2 rounded-md ml-8"
                   >
