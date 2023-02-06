@@ -1,46 +1,744 @@
-import Head from 'next/head'
-import Layout, { siteTitle } from '../components/layout'
-import utilStyles from '../styles/utils.module.css'
-import { getSortedPostsData } from '../lib/posts'
-import Link from 'next/link'
-import Date from '../components/date'
+// import Head from 'next/head'
+// import Layout, { siteTitle } from '../components/layout'
+// import utilStyles from '../styles/utils.module.css'
+// import { getSortedPostsData } from '../lib/posts'
+// import Link from 'next/link'
+// import Date from '../components/date'
 
-export default function Home({ allPostsData }) {
+// export default function Home({ allPostsData }) {
+//   return (
+//     <Layout home>
+//       <Head>
+//         <title>{siteTitle}</title>
+//       </Head>
+//       <section className={utilStyles.headingMd}>
+//         <p>[Your Self Introduction]</p>
+//         <p>
+//           (This is a sample website - you’ll be building a site like this in{' '}
+//           <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
+//         </p>
+//       </section>
+//       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+//         <h2 className={utilStyles.headingLg}>Blog</h2>
+//         <ul className={utilStyles.list}>
+//           {allPostsData.map(({ id, date, title }) => (
+//             <li className={utilStyles.listItem} key={id}>
+//               <Link href={`/posts/${id}`}>{title}</Link>
+//               <br />
+//               <small className={utilStyles.lightText}>
+//                 <Date dateString={date} />
+//               </small>
+//             </li>
+//           ))}
+//         </ul>
+//       </section>
+//     </Layout>
+//   )
+// }
+
+// export async function getStaticProps() {
+//   const allPostsData = getSortedPostsData()
+//   return {
+//     props: {
+//       allPostsData
+//     }
+//   }
+// }
+import { useState, useEffect, useRef } from "react";
+import Head from "next/head";
+import { Inter } from "@next/font/google";
+import { BsFillMoonStarsFill } from "react-icons/bs";
+import {
+  AiFillMail,
+  AiFillLinkedin,
+  AiFillGithub,
+  AiFillStar,
+} from "react-icons/ai";
+import { BsTools } from "react-icons/bs";
+import { CgProfile } from "react-icons/cg";
+import Image from "next/image";
+import deved from "../public/images/DSC_1766-wbg.jpg";
+import javascript from "../public/images/icons8-javascript-96.png";
+import react from "../public/images/icons8-react-a-javascript-library-for-building-user-interfaces-96.png";
+import redux from "../public/images/Redux.svg";
+import express from "../public/images/express.webp";
+import html from "../public/images/html.webp";
+import css from "../public/images/icons8-css3-96.png";
+import tailwind from "../public/images/tailwindcss.svg";
+import chakra from "../public/images/icons8-chakra-ui-96.png";
+import materialui from "../public/images/mui-logo.webp";
+import mysql from "../public/images/icons8-logo-de-mysql-96.png";
+import postgres from "../public/images/icons8-postgresql-96.png";
+import node from "../public/images/nodejs-1-226034.webp";
+import next from "../public/images/next.svg";
+import exootaku from "../public/images/exootaku.png";
+import countries from "../public/images/countries.png";
+import proyInm from "../public/images/raes.png";
+import exootakuWB from "../public/images/exootakusinfondo.png";
+import typescriptLogo from "../public/images/typescript.png";
+import emailjs from "@emailjs/browser";
+import Swal from "sweetalert2";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export default function Home() {
+  const [formData, setFormData] = useState({
+    user_name: "",
+    email: "",
+    message: "",
+  });
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const form = useRef();
+  const sendEmail = (e) => {
+    e.preventDefault();
+    emailjs
+      .sendForm(
+        "service_9eqmr88",
+        "template_22l9t6h",
+        form.current,
+        "BEGJSiO3QImfLnBIz"
+      )
+      .then(
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your email has been send",
+          showConfirmButton: true,
+          timer: 2000,
+        }),
+        setFormData({
+          user_name: "",
+          email: "",
+          message: "",
+        })
+      );
+  };
+  // -----------------------------------------------------------------------
+  const [darkMode, setDarkMode] = useState(false);
+
+  const [width, setWidth] = useState(true);
+  const [height, setHeight] = useState(true);
+
+  useEffect(() => {});
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <Layout home>
+    <div className={darkMode ? "dark" : ""}>
       <Head>
-        <title>{siteTitle}</title>
+        <title>Salvaarmanasco Portfolio</title>
+        <meta name="description" content="Generated by create next app" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <section className={utilStyles.headingMd}>
-        <p>[Your Self Introduction]</p>
-        <p>
-          (This is a sample website - you’ll be building a site like this in{' '}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
-        </p>
-      </section>
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Blog</h2>
-        <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) => (
-            <li className={utilStyles.listItem} key={id}>
-              <Link href={`/posts/${id}`}>{title}</Link>
-              <br />
-              <small className={utilStyles.lightText}>
-                <Date dateString={date} />
-              </small>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </Layout>
-  )
-}
+      <main className=" bg-slate-100 dark:bg-gray-900 overflow-hidden">
+        <section className=" mb-10">
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 dark:text-white">
+            <div className=" flex justify-center m-5 md:m-10 ">
+              <h1 className="text-4xl font-bangers ">Develop By Salva</h1>
+            </div>
+            <div className=" flex justify-center  m-5 md:m-10">
+              <ul className="flex items-center">
+                <li>
+                  <BsFillMoonStarsFill
+                    onClick={() => setDarkMode(!darkMode)}
+                    className=" cursor-pointer text-2xl"
+                  />
+                </li>
+                <li>
+                  <a
+                    href="../public/CV-2023-SalvadorArmanasco.pdf"
+                    download
+                    className=" bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-4 py-2 rounded-md ml-8"
+                  >
+                    Resume
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <section className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3">
+            <div className="text-center break-words w-auto lg:ml-20 lg:mt-10 m-4 col-span-2 ">
+              <h2 className="text-5xl py-2 text-teal-600 font-medium dark:text-teal-400">
+                Salvador Armanasco Catalin
+              </h2>
+              <h3 className="text-3xl py-2 dark:text-white mb-3">
+                Full-Stack Web Developer
+              </h3>
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
-  return {
-    props: {
-      allPostsData
-    }
-  }
+              <h3 className="text-xl dark:text-teal-400">Who am I 👀</h3>
+              <p className=" dark:text-white">
+                🔸 Full-Stack Developer with ability to make web projects always
+                keeping in mind that they are scalable and modular to be able to
+                build as a team. I love organization so I'm always thinking
+                about how to make everything work better.
+              </p>
+              <h3 className="text-xl dark:text-teal-400">Why me 🙇</h3>
+              <p className=" dark:text-white">
+                🔸 I believe I can offer you what you are looking for. I am a
+                person who adapts very quickly to all systems and I can generate
+                good relationships with anyone. I like to solve problems, not
+                generate them. If you are looking for a problem solver who is
+                also a fast learner in any subject, I am for you.
+              </p>
+              <h3 className="text-xl dark:text-teal-400">My work history 😉</h3>
+              <p className=" dark:text-white">
+                🔸 I am looking for my first fullstack developer job. Anyway, I
+                have gained a lot of experience in other jobs. I have acquired
+                the skills of how to work with a team, how to manage my time and
+                money. I have also learned that I can handle a lot of
+                responsibilities successfully. I am willing to employ all this
+                knowledge in an IT company.
+              </p>
+            </div>
+            <div className="relative mx-auto bg-gradient-to-b from-teal-500 rounded-full w-80 h-80 mt-10 mb-10 overflow-hidden">
+              <Image
+                src={deved}
+                fill
+                className=" object-cover"
+                alt="foto-perfil"
+              />
+            </div>
+          </section>
+        </section>
+        <div className=" text-center">
+          <h2 className="text-4xl py-2 text-teal-600 font-medium dark:text-teal-400">
+            My Proyects
+          </h2>
+        </div>
+        <div className="lg:grid grid-cols-3 gap-10 sm:grid dark:bg-gray-900 flex-1 ">
+          <div className="text-center shadow-lg py-10 rounded-xl m-8 dark:bg-gray-800 dark:shadow-white  flex-1 bg-slate-100">
+            <div className="flex justify-center">
+              <Image
+                src={darkMode ? exootakuWB : exootaku}
+                width={200}
+                height={200}
+                alt="exootaku"
+              />
+            </div>
+            <h3 className="text-lg font-medium pt-8 pb-2  dark:text-gray-400">
+              Exootaku E-Commerce
+            </h3>
+            <div className="grid sm:grid-cols-1 md:grid-cols-2">
+              <a
+                href="https://pf-exo-otaku.vercel.app/shop"
+                className=" bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-4 py-2 rounded-md m-4"
+              >
+                Live Demo
+              </a>
+              <a
+                href="https://github.com/Santirbe98/PF-ExoOtaku"
+                className=" bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-4 py-2 rounded-md m-4"
+              >
+                Github Repo
+              </a>
+            </div>
+            <div className="flex justify-center">
+              <p className="py-2 break-word w-80 my-3 dark:text-gray-400">
+                E-Commerce platform for a clothing store with "Otaku/Anime"
+                theme.
+              </p>
+            </div>
+            <h4 className="py-4 text-teal-600 dark:text-teal-400">
+              Created with
+            </h4>
+            <p className="text-gray-800 py-1 dark:text-gray-500">
+              React / Redux
+            </p>
+            <p className="text-gray-800 py-1 dark:text-gray-500">
+              Express / Node
+            </p>
+            <p className="text-gray-800 py-1 dark:text-gray-500">
+              Sequelize / PostgreSQL
+            </p>
+            <p className="text-gray-800 py-1 dark:text-gray-500">
+              MaterialUI / Auth0 / Cloudinary
+            </p>
+          </div>
+          <div className="text-center shadow-lg py-10 rounded-xl m-8 dark:bg-gray-800 dark:shadow-white  flex-1 bg-slate-100">
+            <div className="flex justify-center">
+              <Image
+                src={countries}
+                width={200}
+                height={200}
+                alt="countries"
+                className={darkMode ? " contrast-0" : ""}
+              />
+            </div>
+            <h3 className="text-lg font-medium pt-8 pb-2 dark:text-gray-400">
+              Country-App
+            </h3>
+            <div className="grid sm:grid-cols-1 md:grid-cols-2">
+              <a
+                href="https://pi-countries-main-topaz.vercel.app/"
+                className=" bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-4 py-2 rounded-md m-4"
+              >
+                Live Demo
+              </a>
+              <a
+                href="https://github.com/salvaarmanasco/PI-Countries-main"
+                className=" bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-4 py-2 rounded-md m-4"
+              >
+                Github Repo
+              </a>
+            </div>
+            <div className="flex justify-center">
+              <p className="py-2 break-word w-80 my-3 dark:text-gray-400">
+                Application developed to help you find your favorite country and
+                create activities in it
+              </p>
+            </div>
+            <h4 className="py-4 text-teal-600  dark:text-teal-400">
+              Created with
+            </h4>
+            <p className="text-gray-800 py-1 dark:text-gray-500">
+              React / Redux
+            </p>
+            <p className="text-gray-800 py-1 dark:text-gray-500">
+              Expres / Node
+            </p>
+            <p className="text-gray-800 py-1 dark:text-gray-500">
+              Sequelize / PostgreSQL
+            </p>
+          </div>
+          <div className="text-center shadow-lg py-10 rounded-xl m-8 dark:bg-gray-800 dark:shadow-white  flex-1 bg-slate-100">
+            <div className="flex justify-center">
+              <Image src={proyInm} width={200} height={200} alt="raes" />
+            </div>
+            <h3 className="text-lg font-medium pt-8 dark:text-gray-400">
+              Raes Inversiones
+            </h3>
+            <h3 className="text-md font-medium dark:text-gray-400">
+              (In development)
+            </h3>
+            <div className="flex justify-center">
+              <BsTools />
+            </div>
+            <div className="grid sm:grid-cols-1 md:grid-cols-1">
+              <a
+                href="https://pi-countries-main-topaz.vercel.app/"
+                className=" bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-4 py-2 rounded-md m-4"
+              >
+                Github Repo
+              </a>
+            </div>
+            <div className="flex justify-center">
+              <p className="py-2 break-word w-80 my-3 dark:text-gray-400">
+                Web destined to show properties for sale and/or for rent. It is
+                designed for Raes Inversiones, a real estate company which is
+                located in Santa Fe Capital, Santa Fe, Argentina.
+              </p>
+            </div>
+
+            <h4 className="py-4 text-teal-600  dark:text-teal-400">
+              Creating with
+            </h4>
+            <p className="text-gray-800 py-1 dark:text-gray-500">
+              React / Redux
+            </p>
+            <p className="text-gray-800 py-1 dark:text-gray-500">TypeScript</p>
+            <p className="text-gray-800 py-1 dark:text-gray-500">
+              Expres / Node
+            </p>
+            <p className="text-gray-800 py-1 dark:text-gray-500">
+              Sequelize / mySQL / ChakraUI
+            </p>
+          </div>
+        </div>
+        <section className="bg-teal-600 w-990 mt-5 mx-8 border border-white border-solid rounded-3xl">
+          <section className="flex justify-center align-middle">
+            <h3 className="text-4xl md:text-5xl py-2 font-medium text-white text-center p-2">
+              Skills
+            </h3>
+          </section>
+          {/* ----------------------------------------------------------------------------------------- */}
+          {width > 800 ? (
+            <>
+              <div className="grid grid-cols-3">
+                <h3 className="text-xl md:text-2xl py-2 font-medium text-white text-center p-4">
+                  Front End
+                </h3>
+                <h3 className="text-xl md:text-2xl py-2 font-medium text-white text-center p-4">
+                  Back End
+                </h3>
+                <h3 className="text-xl md:text-2xl py-2 font-medium text-white text-center p-4">
+                  Learning...🧠
+                </h3>
+              </div>
+              <div className="grid gap-8 grid-cols-3 p-5">
+                <div className="grid gap-2 sm:grid-cols-1 md:grid-cols-3">
+                  <div className="grid justify-center">
+                    <Image src={html} alt="html" width={55} height={55} />
+                  </div>
+                  <div className="grid justify-center ">
+                    <Image src={css} alt="css" width={55} height={55} />
+                  </div>
+                  <div className="grid justify-center ">
+                    <Image
+                      src={javascript}
+                      alt="javascript"
+                      width={55}
+                      height={55}
+                    />
+                  </div>
+                  <div className="grid justify-center ">
+                    <Image src={react} alt="react" width={55} height={55} />
+                  </div>
+                  <div className="grid justify-center ">
+                    <Image src={redux} alt="redux" width={55} height={55} />
+                  </div>
+                  <div className="grid justify-center">
+                    <Image
+                      src={materialui}
+                      alt="materialui"
+                      width={55}
+                      height={55}
+                    />
+                  </div>
+                </div>
+                <div className="grid gap-2 sm:grid-cols-1 md:grid-cols-2">
+                  <div className="grid justify-center ">
+                    <Image src={node} alt="node" width={55} height={55} />
+                  </div>
+                  <div className="grid justify-center ">
+                    <Image src={mysql} alt="mysql" width={55} height={55} />
+                  </div>
+                  <div className="grid justify-center ">
+                    <Image
+                      src={postgres}
+                      alt="postgres"
+                      width={55}
+                      height={55}
+                    />
+                  </div>
+                  <div className="grid justify-center">
+                    <Image src={express} alt="express" width={55} height={55} />
+                  </div>
+                </div>
+                <div className="grid gap-5 sm:grid-cols-1 md:grid-cols-3 p-10">
+                  <div className="flex justify-center">
+                    <Image src={chakra} alt="chakraui" width={55} height={55} />
+                  </div>
+                  <div className="flex justify-center">
+                    <Image
+                      src={tailwind}
+                      alt="tailwind"
+                      width={55}
+                      height={55}
+                    />
+                  </div>
+                  <div className="flex justify-center">
+                    <Image src={next} alt="nextjs" width={55} height={55} />
+                  </div>
+                  <div className="flex justify-center">
+                    <Image
+                      src={typescriptLogo}
+                      alt="type"
+                      width={55}
+                      height={55}
+                    />
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="grid grid-cols-2">
+                <h3 className="text-xl md:text-2xl py-2 font-medium text-white text-center p-4">
+                  Front End
+                </h3>
+                <h3 className="text-xl md:text-2xl py-2 font-medium text-white text-center p-4">
+                  Back End
+                </h3>
+              </div>
+              <div className="grid gap-8 grid-cols-2 p-5">
+                <div className="grid gap-2 sm:grid-cols-1 md:grid-cols-3">
+                  <div className="grid justify-center">
+                    <Image src={html} alt="html" width={55} height={55} />
+                  </div>
+                  <div className="grid justify-center ">
+                    <Image src={css} alt="css" width={55} height={55} />
+                  </div>
+                  <div className="grid justify-center ">
+                    <Image
+                      src={javascript}
+                      alt="javascript"
+                      width={55}
+                      height={55}
+                    />
+                  </div>
+                  <div className="grid justify-center ">
+                    <Image src={react} alt="react" width={55} height={55} />
+                  </div>
+                  <div className="grid justify-center ">
+                    <Image src={redux} alt="redux" width={55} height={55} />
+                  </div>
+                  <div className="grid justify-center">
+                    <Image
+                      src={materialui}
+                      alt="materialui"
+                      width={55}
+                      height={55}
+                    />
+                  </div>
+                </div>
+                <div className="grid gap-2 sm:grid-cols-1 md:grid-cols-2">
+                  <div className="grid justify-center ">
+                    <Image src={node} alt="node" width={55} height={55} />
+                  </div>
+                  <div className="grid justify-center ">
+                    <Image src={mysql} alt="mysql" width={55} height={55} />
+                  </div>
+                  <div className="grid justify-center ">
+                    <Image
+                      src={postgres}
+                      alt="postgres"
+                      width={55}
+                      height={55}
+                    />
+                  </div>
+                  <div className="grid justify-center">
+                    <Image src={express} alt="express" width={55} height={55} />
+                  </div>
+                </div>
+              </div>
+              <section className="flex justify-center align-middle">
+                <h3 className=" text-2xl py-2 font-medium text-white">
+                  Learning...🧠
+                </h3>
+              </section>
+              <div className="grid gap-5 grid-cols-2 p-10">
+                <div className="flex justify-center">
+                  <Image src={chakra} alt="chakraui" width={55} height={55} />
+                </div>
+                <div className="flex justify-center">
+                  <Image src={tailwind} alt="tailwind" width={55} height={55} />
+                </div>
+                <div className="flex justify-center">
+                  <Image src={next} alt="nextjs" width={55} height={55} />
+                </div>
+                <div className="flex justify-center">
+                  <Image
+                    src={typescriptLogo}
+                    alt="type"
+                    width={55}
+                    height={55}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+        </section>
+        {/* --------------------------------------------------- */}
+        <div className="flex justify-center">
+          <section className="lg:grid grid-cols-3 gap-10 sm:grid dark:bg-gray-900">
+            <div className="max-w-md py-4 px-8 bg-white shadow-lg rounded-lg my-20 ">
+              <div className="flex justify-center md:justify-end -mt-16">
+                <img
+                  className="w-20 h-20 object-cover rounded-full border-2 border-indigo-500"
+                  src="https://avatars.githubusercontent.com/u/105248137?v=4"
+                  alt="santi"
+                />
+              </div>
+              <div>
+                <h2 className="text-gray-800 text-3xl font-semibold">
+                  Problem Solver
+                </h2>
+                <p className="mt-2 text-gray-600">
+                  As a teammate Salva is excellent, he not only knows how to
+                  solve problems but also has a great ability to teach. When it
+                  comes to making decisions he does it strategically and adapts
+                  to different contexts with ease.
+                </p>
+              </div>
+              <div className="flex justify-end mt-4">
+                <a
+                  href="https://www.linkedin.com/in/santiago-bonetto/"
+                  className="text-xl font-medium text-indigo-500"
+                >
+                  Santiago R. Bonetto
+                </a>
+              </div>
+            </div>
+            <div className="max-w-md py-4 px-8 bg-white shadow-lg rounded-lg my-20">
+              <div className="flex justify-center md:justify-end -mt-16">
+                <img
+                  className="w-20 h-20 object-cover rounded-full border-2 border-indigo-500"
+                  src="https://avatars.githubusercontent.com/u/22782144?v=4"
+                  alt="juanete"
+                />
+              </div>
+              <div>
+                <h2 className="text-gray-800 text-3xl font-semibold">
+                  Team player
+                </h2>
+                <p className="mt-2 text-gray-600">
+                  It was great working with Salvador, not only on Henry projects
+                  but also on others freelance development projects. He's a
+                  brilliant developer and great human being. He's very
+                  responsible, smart and proactive. Besides being co-workers, we
+                  became very good friends. Keep it up Salva!
+                </p>
+              </div>
+              <div className="flex justify-end mt-4">
+                <a
+                  href="https://www.linkedin.com/in/juan-manuel-alcaide-05093020a/"
+                  className="text-xl font-medium text-indigo-500"
+                >
+                  Juan Alcaide
+                </a>
+              </div>
+            </div>
+            <div className="max-w-md py-4 px-8 bg-white shadow-lg rounded-lg my-20">
+              <div className="flex justify-center md:justify-end -mt-16">
+                <img
+                  className="w-20 h-20 object-cover rounded-full border-2 border-indigo-500"
+                  src="https://avatars.githubusercontent.com/u/98441575?v=4"
+                  alt="facu"
+                />
+              </div>
+              <div>
+                <h2 className="text-gray-800 text-3xl font-semibold">
+                  Human quality
+                </h2>
+                <p className="mt-2 text-gray-600">
+                  I had the opportunity to learn and share projects with
+                  Salvador and knowing him in depth there is no doubt that he is
+                  not only an excellent developer but also as a quality person,
+                  he was always there to not only provide his knowledge but also
+                  that good predisposition and words of encouragement that are
+                  needed when something gets complicated.
+                </p>
+              </div>
+              <div className="flex justify-end mt-4">
+                <a
+                  href="https://www.linkedin.com/in/facundo-zanandrea-884958247/"
+                  className="text-xl font-medium text-indigo-500"
+                >
+                  Facundo Zanandrea
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* --------------------------------------------------- */}
+        <div className=" text-center">
+          <h2 className="text-4xl py-2 text-teal-600 font-medium dark:text-teal-400">
+            Contact me!
+          </h2>
+        </div>
+        <section className=" mb-10 mx-5 mt-5">
+          <div className="flex justify-center">
+            <form className="w-full max-w-lg" ref={form} onSubmit={sendEmail}>
+              <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full px-3">
+                  <label
+                    className="block uppercase tracking-wide text-gray-700 dark:text-gray-400 text-xs font-bold mb-2"
+                    for="grid-password"
+                  >
+                    Nickname
+                  </label>
+                  <input
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border  border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="nick"
+                    type="text"
+                    name="user_name"
+                    value={formData.user_name}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full px-3">
+                  <label
+                    className="block uppercase tracking-wide text-gray-700 dark:text-gray-400 text-xs font-bold mb-2"
+                    for="grid-password"
+                  >
+                    E-mail
+                  </label>
+                  <input
+                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    id="email"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full px-3">
+                  <label
+                    className="block uppercase tracking-wide dark:text-gray-400 text-gray-700 text-xs font-bold mb-2"
+                    for="grid-password"
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    className=" no-resize appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 h-48 resize-none"
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                  ></textarea>
+                </div>
+              </div>
+              <div className="md:flex md:items-center">
+                <div className="md:w-1/3">
+                  <input
+                    type="submit"
+                    value="Send"
+                    className="shadow bg-teal-400 hover:bg-teal-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                  />
+                </div>
+                <div className="md:w-2/3"></div>
+              </div>
+            </form>
+          </div>
+        </section>
+        {/* --------------------------------------------------- */}
+
+        <section>
+          <div className="text-sm gap-6 py-3 text-white dark:bg-gray-900 bg-gray-900 grid text-center">
+            <div className="grid grid-cols-1">
+              <div className="flex justify-center align-middle">
+                <a
+                  href="https://www.linkedin.com/in/salvador-armanasco-catalin-18b045205/"
+                  className=" px-5"
+                >
+                  <AiFillLinkedin size={30} />
+                </a>
+                <a href="https://github.com/salvaarmanasco" className=" px-5">
+                  <AiFillGithub size={30} />
+                </a>
+                <a
+                  href="https://www.getonbrd.com/p/salvador-armanasco-catalin"
+                  className=" px-5"
+                >
+                  <CgProfile size={30} />
+                </a>
+              </div>
+            </div>
+            <div className="flex justify-center text-center align-middle mb-5">
+              <h3>© 2023 salvaarmanasco. All rights reserved</h3>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
 }
