@@ -218,7 +218,7 @@ export default function Home() {
             My Proyects
           </h2>
         </div>
-        <div className="lg:grid grid-cols-3 gap-10 sm:grid dark:bg-gray-900 flex-1 ">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 dark:bg-gray-900 flex-1">
           <div className="text-center shadow-lg py-10 rounded-xl m-8 dark:bg-gray-800 dark:shadow-white  flex-1 bg-slate-100">
             <div className="flex justify-center">
               <Image
